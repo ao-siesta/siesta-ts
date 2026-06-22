@@ -1,0 +1,87 @@
+{
+  "name": "ts-eslint-base",
+  "type": "module",
+  "version": "3.0.0",
+  "description": "",
+  "author": "Oliver Mak",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oliver139/ts-eslint-base"
+  },
+  "keywords": [],
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "engines": {
+    "node": "^24.17.0",
+    "runtime": {
+      "name": "node",
+      "version": "^24.17.0",
+      "onFail": "download"
+    }
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.17.0",
+      "onFail": "download"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.5.0",
+      "onFail": "warn"
+    }
+  },
+  "scripts": {
+    "initialize": "git reset $(git commit-tree \"HEAD^{tree}\" -m \"Initialize\")",
+    "build": "tsdown --clean --dts",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
+    "lint:inspect": "eslint --inspect-config",
+    "start": "tsx src/index.ts",
+    "run": "nr start",
+    "dev": "tsx watch src/index.ts",
+    "prepare": "simple-git-hooks",
+    "prepack": "nr build",
+    "release": "nlx bumpp",
+    "analyze": "nlx node-modules-inspector"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.0",
+    "axios": "^1.18.0",
+    "discord.js": "^14.26.4",
+    "node-cron": "^4.4.1",
+    "random": "^5.4.1",
+    "selenium-webdriver": "^4.45.0",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^9.0.0",
+    "@antfu/ni": "^30.1.0",
+    "@oliver139/eslint-config": "^7.5.4",
+    "@tsconfig/recommended": "1.0.13",
+    "@types/node": "^24.13.2",
+    "eslint": "^10.5.0",
+    "npm-check-updates": "^22.2.7",
+    "simple-git-hooks": "^2.13.1",
+    "taze": "^19.14.1",
+    "tsdown": "^0.22.3",
+    "tsdown-stale-guard": "^0.1.2",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}

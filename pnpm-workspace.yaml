@@ -1,0 +1,12 @@
+minimumReleaseAgeExclude:
+  - '@oliver139/*'
+
+shellEmulator: true
+
+packages:
+  - 'fixtures/*'
+
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true
+  sqlite3: true

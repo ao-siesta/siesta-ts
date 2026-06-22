@@ -1,0 +1,29 @@
+node_modules
+package-lock.json
+.DS_Store
+dist
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cache
+.eslintcache
+
+# Discord config file
+config.json
+config copy.json
+config-deploy.json
+config-test.json
+webhook.json
+
+# Others
+guildcmdreg.js
+todo
+database.sqlite
+server.txt
+expired
