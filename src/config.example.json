@@ -1,0 +1,14 @@
+{
+  "cid": "應用程式ID (Client ID) [必需]",
+  "token": "權杖 (Token) [必需]",
+
+  "oid": "用戶ID",
+
+  "webhooks": "Webhooks",
+  "ignore": "",
+
+  "miaomi": "Server ID",
+  "miaomiCh": "Channel ID",
+  "bdDebugCh": "Birthday Debug Channel ID（暫未有用）",
+  "BDrole": "Birthday role ID"
+}
