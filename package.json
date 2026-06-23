@@ -1,22 +1,21 @@
 {
-  "name": "ts-eslint-base",
+  "name": "ao-siesta",
   "type": "module",
-  "version": "3.0.0",
+  "version": "5.0.0",
   "description": "",
-  "author": "Oliver Mak",
+  "author": "William Wong",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oliver139/ts-eslint-base"
+    "url": "https://github.com/ao-siesta/siesta-ts"
   },
-  "keywords": [],
+  "keywords": ["discord", "bot"],
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.mts",
   "files": [
-    "bin",
     "dist"
   ],
   "engines": {
@@ -32,11 +31,6 @@
       "name": "node",
       "version": "^24.17.0",
       "onFail": "download"
-    },
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.5.0",
-      "onFail": "warn"
     }
   },
   "scripts": {

@@ -1,35 +1,54 @@
-# ts-eslint-base
+# Discord Guild Support Bot
 
-A well setup template for starting a typescript project. Used rollup as project bundler.
-Linter will automatically run upon `git commit`.
+## Introduction
+A bot for moderating and monitoring discord guilds. Recently been rewritten in TypeScript
 
-## Project Setup
+## Setup
+
+### Prerequisites
+Required NodeJS v24.17.0
+
+### Prepare config file
+
+#### Bot related
+1. Go to [Discord Developer Portal](https://discord.com/developers/home) and select your bot for development
+2. Open `config.example.json` and fill in below info:
+    - [General Information] Copy `Application ID` to `cid`
+    - [Bot] Copy `Token` to `token`
+
+#### Miaomi channel
+- `miaomi`: Server ID
+- `miaomiCh`: Channel ID
+- `BDrole`: Birthday role ID
+
+#### Rename file
+Rename `config.example.json` to `config.json`
+
+### Start dev server
+Open your terminal:
 
 ```sh
+# Install dependencies
+npm install
 pnpm install
+
+# Register the commands
+npm run cmdreg
+pnpm cmdreg
+
+# Start development
+npm run dev
+pnpm dev
 ```
 
-### Run src/index.ts
-
+### Auto Linting
+This project supports auto-linting before `git commit`. You can skip this with `--no-verify` flag, e.g.:
 ```sh
-pnpm start
+git commit --no-verify -m "<Commit message>"
 ```
 
-### Build the project with Rollup
-
-```sh
-pnpm build
-```
-
-### Build the project with Tsc
-
-```sh
-pnpm build:tsc
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-pnpm lint:check # Check only
-```
+## Contact Us
+Contact the developers with the following ways:
+1. PR or Issues
+2. Discord: 蒼アオ(@nkmrao)
+3. [Twitter](https://twitter.com/nkmraoao/)
