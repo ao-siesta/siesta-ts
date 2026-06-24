@@ -402,4 +402,4 @@ export const ummm = [
   '麥塊烤雞',
 ]
 
-export default [...ummm, ...good, ...strange]
+export const all = () => [...ummm, ...good, ...strange]

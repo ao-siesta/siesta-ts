@@ -5,7 +5,7 @@
   "oid": "用戶ID",
 
   "webhooks": "Webhooks",
-  "ignore": "",
+  "ignore": [""],
 
   "miaomi": "Server ID",
   "miaomiCh": "Channel ID",

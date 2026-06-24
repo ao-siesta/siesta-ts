@@ -47,5 +47,7 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+  "git.allowNoVerifyCommit": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

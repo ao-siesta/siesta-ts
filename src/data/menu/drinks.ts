@@ -195,4 +195,4 @@ export const ummm = [
   '雞骨草',
 ]
 
-export default [...ummm, ...good, ...strange]
+export const all = () => [...ummm, ...good, ...strange]
