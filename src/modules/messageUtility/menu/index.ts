@@ -18,13 +18,13 @@ export function pickDrinks(group: FoodDrinkType = 'all') {
   if (group === 'all') return randomFn.choice(drinks.all())
   return randomFn.choice(drinks[group] ?? drinks.all())
 }
-export function pickFoodDrink(type: FoodOrDrink, testMode: TestMode, group: FoodDrinkType = 'all') {
+export function pickFoodDrink(type: FoodOrDrink, testMode?: TestMode, group: FoodDrinkType = 'all') {
   const dict = new Map([
     [1, { food: '吃什麼自己想啦', drink: '喝什麼自己想啦' }] as const,
     [2, { food: '不要吃', drink: '不要喝' }] as const,
     [3, { food: '那個食物吧', drink: '那個飲料吧' }] as const,
   ])
-  return dict.get(testMode)?.[type] ?? (type === 'food' ? pickFood(group) : pickDrinks(group))
+  return (testMode && dict.get(testMode)?.[type]) ?? (type === 'food' ? pickFood(group) : pickDrinks(group))
 }
 
 // #region : 菜單機率
@@ -64,7 +64,7 @@ export function isAskingMeal(msg: string) {
 }
 
 // 抽
-export function eatDrinkWhat(msg: string, testMode: TestMode): Nullable<string> {
+export function eatDrinkWhat(msg: string, testMode?: TestMode): Nullable<string> {
   const meal = mealMatch.find(term => msg.includes(term))
   if (!meal) return null
 
@@ -219,7 +219,10 @@ export function identifyItem(item: string): identifyItemRet | null {
   return null
 }
 
-export function checkItem(item: string) {
+export function checkItem(content: string) {
+  if (content.trim() === '菜單有沒有') return randomFn.boolean() ? '有，有菜單' : '你要不要看看你到底在問什麼？'
+
+  const item = content.replace('菜單有沒有', '').replace('?', '').replace('？', '').trim()
   const res = identifyItem(item)
   if (!res) return '沒有'
 
@@ -230,3 +233,25 @@ export function checkItem(item: string) {
   }
 }
 //  #endregion
+
+export function testMenuOutput(printToConsole = false) {
+  const output = [
+    eatDrinkWhat('早餐吃什麼'),
+    eatDrinkWhat('早餐吃什麼', 1),
+    eatDrinkWhat('早餐吃什麼', 2),
+    eatDrinkWhat('早餐吃什麼', 3),
+    '-----------------------------',
+    eatDrinkWhat('喝什麼'),
+    eatDrinkWhat('喝什麼', 1),
+    eatDrinkWhat('喝什麼', 2),
+    eatDrinkWhat('喝什麼', 3),
+    '-----------------------------',
+    eatDrinkWhat('來份套餐'),
+    eatDrinkWhat('來份套餐', 1),
+    eatDrinkWhat('來份套餐', 2),
+    eatDrinkWhat('來份套餐', 3),
+  ]
+
+  if (printToConsole) console.debug(output)
+  return output.join('\n')
+}

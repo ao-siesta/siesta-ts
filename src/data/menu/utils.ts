@@ -1,4 +1,4 @@
-import type { FoodDrinkType, FoodOrDrink } from '@/modules/messageUtility/menu/foodDrink'
+import type { FoodDrinkType, FoodOrDrink } from '@/modules/messageUtility/menu/'
 
 type MenuLang = 'cn' | 'canto'
 type FoodDrinkMeal = FoodOrDrink | 'setMeal'

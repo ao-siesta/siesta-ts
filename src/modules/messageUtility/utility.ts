@@ -67,31 +67,31 @@ export function omikuji(msg: ChannelMessageObj) {
     case 0:
     case 1:
     case 2:
-      msg.channel.send(getFormatOmikujiResult(result.get('daikichi')!, author))
+      return getFormatOmikujiResult(result.get('daikichi')!, author)
       break
     case 3:
     case 4:
-      msg.channel.send(getFormatOmikujiResult(result.get('syoukichi')!, author))
+      return getFormatOmikujiResult(result.get('syoukichi')!, author)
       break
     case 5:
     case 6:
     case 7:
-      msg.channel.send(getFormatOmikujiResult(result.get('kichi')!, author))
+      return getFormatOmikujiResult(result.get('kichi')!, author)
       break
     case 8:
     case 9:
-      msg.channel.send(getFormatOmikujiResult(result.get('suekichi')!, author))
+      return getFormatOmikujiResult(result.get('suekichi')!, author)
       break
     case 10:
     case 11:
-      msg.channel.send(getFormatOmikujiResult(result.get('chuukichii')!, author))
+      return getFormatOmikujiResult(result.get('chuukichii')!, author)
       break
     case 12:
     case 13:
-      msg.channel.send(getFormatOmikujiResult(result.get('kyou')!, author))
+      return getFormatOmikujiResult(result.get('kyou')!, author)
       break
     case 14:
-      msg.channel.send(getFormatOmikujiResult(result.get('daikyou')!, author))
+      return getFormatOmikujiResult(result.get('daikyou')!, author)
       break
   }
 }
@@ -134,6 +134,8 @@ export function logTime() {
   console.log(now.toTimeString())
 }
 
-export function helpMeSelect(items: string[]) {
-  return randomFn.choice(items)
+export function helpMeSelect(items: string[]): string {
+  if (items.length <= 1) return '蛤？抽什麼？'
+  if (randomFn.int(0, 100) === 50) return randomFn.boolean() ? '小孩子才做選擇，全都要！' : '都不要'
+  return `就這個吧：${randomFn.choice(items)}`
 }

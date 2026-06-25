@@ -1,80 +1,52 @@
+/* eslint-disable style/brace-style */
 import type { ChannelMessageObj } from '@/types/general'
+import randomFn from 'random'
 import config from '@/config.json'
 import Botzone from '@/data/database/dbFunction/BotChannel'
-import { flipCoin, helpMeSelect, isOwner, omikuji } from '../utility'
+import { checkItem, eatDrinkWhat, getMenuStat, isAskingMeal, isCheckingMenu, testMenuOutput } from './menu/'
+import { flipCoin, helpMeSelect, isOwner, omikuji } from './utility'
 
 const botZone = new Botzone()
-const { default: randomFn } = require('random')
-const { isAskingMeal, eatDrinkWhat, getMenuStat, isCheckingMenu, checkItem } = require('../foodDrink')
 
 export default {
   execute: async (msg: ChannelMessageObj) => {
+    const isOwnerUser = isOwner(msg.author.id)
     const isRightChannel = await botZone.findChannel(msg.channelId)
-    if (msg.content === '菜單機率' && (isRightChannel || isOwner(msg.author.id))) {
+
+    if (msg.content === '菜單機率' && (isRightChannel || isOwnerUser)) {
       msg.reply(getMenuStat())
-    } else if (msg.content.includes('機率') && (isRightChannel || isOwner(msg.author.id))) {
+    }
+    else if (msg.content.includes('機率') && (isRightChannel || isOwnerUser)) {
       const num = randomFn.int(0, 100)
       msg.channel.send(`${num}%`)
-    } else if (msg.content.includes('抽籤') && isRightChannel) {
-      omikuji(msg)
-    } else if ((msg.content.startsWith('隨機') || msg.content.startsWith('抽一個')) && isRightChannel) {
+    }
+    else if (msg.content.includes('抽籤') && isRightChannel) {
+      msg.reply(omikuji(msg) ?? '大吉，我說你是就是')
+    }
+    else if ((msg.content.startsWith('隨機 ') || msg.content.startsWith('抽一個 ')) && isRightChannel) {
       const items = msg.content.replace(/\s+/g, ' ').trim().split(' ').slice(1)
-      if (items.length <= 1) {
-        msg.reply('蛤？抽什麼？')
-        return
-      }
-
-      if (randomFn.int(0, 100) === 50) {
-        msg.reply(randomFn.boolean() ? '小孩子才做選擇，全都要！' : '都不要')
-      } else {
-        msg.reply(`就這個吧：${helpMeSelect(items)}`)
-      }
-    } else if (msg.content === `<@${config.cid}>我婆` || msg.content === `<@${config.cid}> 我婆`) {
-      msg.reply(isOwner(msg.author.id) ? '沒錯♥' : '婆你個大頭 醒')
-    } else if (msg.content === `<@${config.cid}>老婆` || msg.content === `<@${config.cid}> 老婆`) {
-      msg.reply(isOwner(msg.author.id) ? '怎麼了♥' : '<:miaomi_yue:1513049019671121920>')
-    } else if (msg.content.includes('擲幣') && isRightChannel) {
+      msg.reply(helpMeSelect(items))
+    }
+    else if (msg.content.replace(' ', '') === `<@${config.cid}>我婆`) {
+      msg.reply(isOwnerUser ? '沒錯♥' : '婆你個大頭 醒')
+    }
+    else if (msg.content.replace(' ', '') === `<@${config.cid}>老婆`) {
+      msg.reply(isOwnerUser ? '怎麼了♥' : '<:miaomi_yue:1513049019671121920>')
+    }
+    else if (msg.content.includes('擲幣') && isRightChannel) {
       msg.reply(flipCoin(msg.author))
-    } else if (msg.content === '撒幣' && isRightChannel) {
+    }
+    else if (msg.content === '撒幣' && isRightChannel) {
       msg.reply(flipCoin(msg.author, true))
-    } else if (isAskingMeal(msg.content) && !msg.author.bot && isRightChannel) {
-      const choice = eatDrinkWhat(msg.content)
-
-      // Error Handling
-      if (choice === false) {
-        msg.reply('累了，你自己想吧')
-        return
-      }
-
-      if (choice !== null) {
-        msg.reply(choice)
-      }
-    } else if (isCheckingMenu(msg.content) && (isRightChannel || isOwner(msg.author.id))) {
-      if (msg.content.trim() === '菜單有沒有') {
-        msg.reply(randomFn.boolean() ? '有，有菜單' : '你要不要看看你到底在問什麼？')
-        return
-      }
-      const item = msg.content.replace('菜單有沒有', '').replace('?', '').replace('？', '').trim()
-      msg.reply(checkItem(item))
-    } else if (msg.content === '菜單測試' && isOwner(msg.author.id)) {
-      const output = [
-        eatDrinkWhat('早餐吃什麼'),
-        eatDrinkWhat('早餐吃什麼', 1),
-        eatDrinkWhat('早餐吃什麼', 2),
-        eatDrinkWhat('早餐吃什麼', 3),
-        '-----------------------------',
-        eatDrinkWhat('喝什麼'),
-        eatDrinkWhat('喝什麼', 1),
-        eatDrinkWhat('喝什麼', 2),
-        eatDrinkWhat('喝什麼', 3),
-        '-----------------------------',
-        eatDrinkWhat('來份套餐'),
-        eatDrinkWhat('來份套餐', 1),
-        eatDrinkWhat('來份套餐', 2),
-        eatDrinkWhat('來份套餐', 3),
-      ]
-      console.debug(output)
-      msg.reply(output.join('\n'))
+    }
+    else if (isAskingMeal(msg.content) && !msg.author.bot && isRightChannel) {
+      msg.reply(eatDrinkWhat(msg.content) ?? '累了，你自己想吧')
+    }
+    else if (isCheckingMenu(msg.content) && (isRightChannel || isOwnerUser)) {
+      msg.reply(checkItem(msg.content))
+    }
+    else if (msg.content === '菜單測試' && isOwnerUser) {
+      msg.reply(testMenuOutput())
     }
   },
 }
