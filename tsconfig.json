@@ -8,9 +8,12 @@
     "moduleResolution": "Bundler",
 
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "package.json": ["./package.json"]
     },
     "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
     "strict": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
@@ -23,8 +26,8 @@
     "skipLibCheck": true
   },
   "include": [
-    "src",
-    "types"
+    "src/**/*",
+    "auto-imports.d.ts"
   ],
   "exclude": [
     "dist",

@@ -19,7 +19,10 @@ config.json
 config copy.json
 config-deploy.json
 config-test.json
-webhook.json
+webhooks.config.ts
+
+# Auto Import
+auto-imports.d.ts
 
 # Others
 guildcmdreg.js

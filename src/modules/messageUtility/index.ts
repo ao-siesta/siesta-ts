@@ -2,16 +2,16 @@
 import type { ChannelMessageObj } from '@/types/general'
 import randomFn from 'random'
 import config from '@/config.json'
-import Botzone from '@/data/database/dbFunction/BotChannel'
+import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { checkItem, eatDrinkWhat, getMenuStat, isAskingMeal, isCheckingMenu, testMenuOutput } from './menu/'
-import { flipCoin, helpMeSelect, isOwner, omikuji } from './utility'
+import { flipCoin, helpMeSelect, omikuji } from './utility'
 
-const botZone = new Botzone()
+const botChannel = new BotChannel()
 
 export default {
   execute: async (msg: ChannelMessageObj) => {
     const isOwnerUser = isOwner(msg.author.id)
-    const isRightChannel = await botZone.findChannel(msg.channelId)
+    const isRightChannel = await botChannel.findChannel(msg.channelId)
 
     if (msg.content === '菜單機率' && (isRightChannel || isOwnerUser)) {
       msg.reply(getMenuStat())

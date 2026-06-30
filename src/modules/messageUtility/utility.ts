@@ -1,16 +1,6 @@
-import type { BaseMessageOptions, ChatInputCommandInteraction } from 'discord.js'
+import type { BaseMessageOptions } from 'discord.js'
 import type { ChannelMessageObj } from '@/types/general'
-import { PermissionFlagsBits } from 'discord.js'
 import randomFn from 'random'
-import config from '@/config.json'
-
-export function isAdmin(interaction: ChatInputCommandInteraction) {
-  return (interaction.user.id === config.oid || interaction.memberPermissions?.has(PermissionFlagsBits.Administrator, true))
-}
-
-export function isOwner(id: string) {
-  return id === config.oid
-}
 
 export function omikuji(msg: ChannelMessageObj) {
   interface OmikujiResult {
@@ -127,11 +117,6 @@ export function flipCoin(author: ChannelMessageObj['author'], multiple = false) 
   if (haveMiddle) content += '竟然擲到了中間，這真的是太牛逼了，該請客了！'
 
   return { content, embeds: output }
-}
-
-export function logTime() {
-  const now = new Date()
-  console.log(now.toTimeString())
 }
 
 export function helpMeSelect(items: string[]): string {

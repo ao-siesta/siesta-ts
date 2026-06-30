@@ -1,15 +1,13 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const botzoneDB = require('../modules/dbFunction/botChannel');
+import type { ChatInputCommandInteraction } from 'discord.js'
+import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import BotChannel from '@/data/database/dbFunction/BotChannel'
 
-const Obj_cre = new botzoneDB.botzone();
-const { isOwner } = require('../modules/utility');
+const botChannel = new BotChannel()
 
 function generateHelpMsg() {
   return {
     color: 0xFFFFFF,
     title: '現在可用的功能',
-    // description: "現在可用的功能",
-    // thumbnail: { url: "https://cdn.discordapp.com/attachments/966618791276605470/1329445510485905522/image.png" },
     fields: [
       {
         name: '# 指令',
@@ -117,25 +115,34 @@ function generateHelpMsg() {
           ].join('、'),
           '',
           '**特殊類：**',
-          ['巴尼陣亡紀念日', '生日', '光棍節', '黑色星期五', 'Black Friday', '網絡星期一', 'Cyber Monday', '感恩節'].join('、'),
+          [
+            '巴尼陣亡紀念日',
+            '生日',
+            '光棍節',
+            '黑色星期五',
+            'Black Friday',
+            '網絡星期一',
+            'Cyber Monday',
+            '感恩節',
+          ].join('、'),
         ].join('\n'),
       },
     ],
-  };
+  }
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('funhelp')
     .setDescription('顯示趣味功能的說明書')
     .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages),
 
-  async execute(interaction) {
-    const isRightChannel = await Obj_cre.findChannel(interaction.channelId);
+  execute: async (interaction: ChatInputCommandInteraction) => {
+    const isRightChannel = await botChannel.findChannel(interaction.channelId)
     if (isRightChannel || isOwner(interaction.user.id)) {
-      await interaction.reply({ content: '**趣味功能**', embeds: [generateHelpMsg()] });
+      await interaction.reply({ content: '**趣味功能**', embeds: [generateHelpMsg()] })
     } else {
-      await interaction.reply({ content: '請在機器人區域中使用', ephemeral: true });
+      await interaction.reply({ content: '請在機器人區域中使用', ephemeral: true })
     }
   },
-};
+}
