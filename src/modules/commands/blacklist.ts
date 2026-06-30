@@ -1,5 +1,6 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import { SlashCommandBuilder } from 'discord.js'
+import { isOwner, logTime } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

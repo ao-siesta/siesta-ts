@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
+import { isOwner } from '@/utils/general'
 
 const botChannel = new BotChannel()
 

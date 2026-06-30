@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotLog from '@/data/database/dbFunction/BotLog'
+import { isAdmin, logTime } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

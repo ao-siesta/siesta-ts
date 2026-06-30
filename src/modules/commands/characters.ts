@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import characters from '@/assets/avatars/characters'
+import { isOwner } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

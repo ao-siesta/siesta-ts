@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import Servers from '@/data/database/dbFunction/Servers'
+import { isAdmin } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

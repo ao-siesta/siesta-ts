@@ -2,6 +2,7 @@ import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import { ChannelType, MessageFlags, SlashCommandBuilder, ThreadAutoArchiveDuration } from 'discord.js'
 import { consoleChannel } from '@/config.json'
 import Servers from '@/data/database/dbFunction/Servers'
+import { logTime } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

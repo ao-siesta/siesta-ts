@@ -22,5 +22,4 @@ export function logTime() {
   console.log(now.toTimeString())
 }
 
-export const filename = fileURLToPath(import.meta.url)
-export const dirname = dn(filename)
+export const dirname = dn(fileURLToPath(import.meta.url))

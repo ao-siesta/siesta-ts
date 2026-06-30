@@ -1,5 +1,6 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import { ChannelType, MessageFlags, SlashCommandBuilder } from 'discord.js'
+import { isOwner } from '@/utils/general'
 
 export default {
   data: new SlashCommandBuilder()

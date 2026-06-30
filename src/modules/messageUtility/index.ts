@@ -3,6 +3,7 @@ import type { ChannelMessageObj } from '@/types/general'
 import randomFn from 'random'
 import config from '@/config.json'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
+import { isOwner } from '@/utils/general'
 import { checkItem, eatDrinkWhat, getMenuStat, isAskingMeal, isCheckingMenu, testMenuOutput } from './menu/'
 import { flipCoin, helpMeSelect, omikuji } from './utility'
 

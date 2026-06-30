@@ -21,9 +21,6 @@ config-deploy.json
 config-test.json
 webhooks.config.ts
 
-# Auto Import
-auto-imports.d.ts
-
 # Others
 guildcmdreg.js
 todo

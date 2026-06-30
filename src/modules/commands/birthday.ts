@@ -4,6 +4,7 @@ import Canvas from '@napi-rs/canvas'
 import { AttachmentBuilder, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { miaomi } from '@/config.json'
 import Birthday from '@/data/database/dbFunction/Birthday'
+import { dirname, isOwner } from '@/utils/general'
 
 // #region : Sub commands
 function todayWhoBirthday(sub: SlashCommandSubcommandBuilder) {
