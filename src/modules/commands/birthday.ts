@@ -86,7 +86,7 @@ const command = new SlashCommandBuilder().setName('birthday').setDescription('ไป
 subCommands.forEach(subCmd => command.addSubcommand(subCmd))
 // #endregion
 
-// ===========================================================================================================================================================================
+// ========================================================================================================================================================
 
 // #region : Create interaction (All return a reply object)
 async function todayInteraction(bdObj: Birthday): Promise<InteractionReplyOptions | string> {
@@ -168,8 +168,8 @@ async function cardInteraction(bdObj: Birthday, options: ChatInputCommandInterac
     const canvas = Canvas.createCanvas(500, 598)
     const context = canvas.getContext('2d')
 
-    const background = await Canvas.loadImage(path.join(__dirname, '../assets/images/bd_card.jpg'))
-    const hat = await Canvas.loadImage(path.join(__dirname, '../assets/images/party_hat2.png'))
+    const background = await Canvas.loadImage(path.join(dirname, '../assets/images/bd_card.jpg'))
+    const hat = await Canvas.loadImage(path.join(dirname, '../assets/images/party_hat2.png'))
 
     context.drawImage(background, 0, 0, 500, 599)
 
@@ -190,8 +190,8 @@ async function cardInteraction(bdObj: Birthday, options: ChatInputCommandInterac
     const canvas = Canvas.createCanvas(1040, 720)
     const context = canvas.getContext('2d')
 
-    const background = await Canvas.loadImage(path.join(__dirname, '../assets/images/hbd_me.jpg'))
-    const hat = await Canvas.loadImage(path.join(__dirname, '../assets/images/party_hat3.png'))
+    const background = await Canvas.loadImage(path.join(dirname, '../assets/images/hbd_me.jpg'))
+    const hat = await Canvas.loadImage(path.join(dirname, '../assets/images/party_hat3.png'))
 
     context.drawImage(background, 0, 0, canvas.width, canvas.height)
 

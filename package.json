@@ -48,7 +48,8 @@
     "prepare": "simple-git-hooks",
     "prepack": "nr build",
     "release": "nlx bumpp",
-    "analyze": "nlx node-modules-inspector"
+    "analyze": "nlx node-modules-inspector",
+    "cmdreg": "tsx src/utils/cmdreg.ts"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.0",
