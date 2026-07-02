@@ -1,5 +1,5 @@
 import type { APIEmbed, Client } from 'discord.js'
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgDelete } from '@/types/general'
 import { Buffer } from 'node:buffer'
 import axios from 'axios'
 import { AttachmentBuilder } from 'discord.js'
@@ -7,8 +7,10 @@ import BotLog from '@/data/database/dbFunction/BotLog'
 
 const botLog = new BotLog()
 
-module.exports = {
-  execute: async (msg: ChannelMessageObj, client: Client) => {
+export default {
+  execute: async (msg: MsgDelete, client: Client) => {
+    // if (!msg.author || msg.author.bot) return
+
     if (!msg.guildId) return
     if (msg.channel.isDMBased()) return
 
@@ -20,7 +22,7 @@ module.exports = {
     const embed: APIEmbed = {
       color: 0xFFFFFF,
       title: '',
-      description: `${msg.author.displayName}<@${msg.author.id}>`,
+      description: `${msg.author!.displayName}<@${msg.author!.id}>`,
     }
 
     const files: AttachmentBuilder[] = []

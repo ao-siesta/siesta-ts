@@ -1,4 +1,5 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
+import type { Command } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import characters from '@/assets/avatars/characters'
 import { isOwner } from '@/utils/general'
@@ -45,4 +46,4 @@ export default {
       }
     }
   },
-}
+} satisfies Command

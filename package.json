@@ -82,5 +82,8 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "inlinedDependencies": {
+    "ansis": "4.3.1"
   }
 }

@@ -1,4 +1,5 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
+import type { Command } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { isOwner, logTime } from '@/utils/general'
 
@@ -35,4 +36,4 @@ export default {
     logTime()
     console.log(`-----------------------\nblacklisted ${userId}\n-----------------------`)
   },
-}
+} satisfies Command

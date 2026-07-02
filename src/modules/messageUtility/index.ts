@@ -1,5 +1,5 @@
 /* eslint-disable style/brace-style */
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgCreate } from '@/types/general'
 import randomFn from 'random'
 import config from '@/config.json'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
@@ -10,7 +10,7 @@ import { flipCoin, helpMeSelect, omikuji } from './utility'
 const botChannel = new BotChannel()
 
 export default {
-  execute: async (msg: ChannelMessageObj) => {
+  execute: async (msg: MsgCreate) => {
     const isOwnerUser = isOwner(msg.author.id)
     const isRightChannel = await botChannel.findChannel(msg.channelId)
 

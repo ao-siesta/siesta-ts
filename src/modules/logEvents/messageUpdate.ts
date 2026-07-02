@@ -1,13 +1,12 @@
 import type { APIEmbed, Client } from 'discord.js'
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgUpdate } from '@/types/general'
 import BotLog from '@/data/database/dbFunction/BotLog'
 
 const botLog = new BotLog()
 
-module.exports = {
-  execute: async (oldMessage: ChannelMessageObj, newMessage: ChannelMessageObj, client: Client) => {
-    if (!oldMessage.guildId) return
-    if (oldMessage.channel.isDMBased()) return
+export default {
+  execute: async (oldMessage: MsgUpdate[0], newMessage: MsgUpdate[1], client: Client) => {
+    if (!oldMessage.guildId || oldMessage.channel.isDMBased() || !oldMessage.author) return
 
     const channelId = await botLog.logChannelId(oldMessage.guildId)
     if (!channelId) return

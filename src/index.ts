@@ -1,171 +1,113 @@
-// import type { SlashCommandBuilder } from 'discord.js'
-// import fs from 'node:fs'
-// import c from 'ansis'
-// import { ActivityType, Client, Collection, GatewayIntentBits, MessageFlags } from 'discord.js'
-// import sql from 'sequelize'
-// import { miaomiCh, oid, token } from '../config.json'
+import type { ChatInputCommandInteraction } from 'discord.js'
+import c from 'ansis'
+import { ActivityType, Client, GatewayIntentBits, MessageFlags, Partials } from 'discord.js'
+import { Sequelize } from 'sequelize'
+import { miaomiCh, oid, token } from '@/config.json'
+import { CommandDict } from './modules/commands'
 
-// const client = new Client({
-//   partials: ['CHANNEL', 'MESSAGE', 'USER'],
-//   intents: [
-//     GatewayIntentBits.Guilds,
-//     GatewayIntentBits.GuildMessages,
-//     GatewayIntentBits.GuildWebhooks,
-//     GatewayIntentBits.GuildInvites,
-//     GatewayIntentBits.GuildModeration,
-//     GatewayIntentBits.GuildMembers,
-//     GatewayIntentBits.MessageContent,
-//     GatewayIntentBits.DirectMessages,
-//   ],
-// })
+import CronJobHelper from './modules/cronjob/helper'
+import taskScheduler from './modules/cronjob/task-scheduler'
+import '@/modules/cronjob/jobs/index'
 
-// client.commands = new Collection()
-// const commandFiles = fs.readdirSync('./cmds').filter(file => file.endsWith('.js'))
+import BirthdayDB from '@/data/database/dbStructure/Birthday'
+import BotChannelDB from '@/data/database/dbStructure/BotChannel'
+import BotLogDB from '@/data/database/dbStructure/BotLog'
+import ServersDB from '@/data/database/dbStructure/Servers'
+import MsgDeleted from './modules/logEvents/messageDeleted'
+import MsgUpdated from './modules/logEvents/messageUpdate'
 
-// for (const file of commandFiles) {
-//   const command = require(`./cmds/${file}`)
-//   client.commands.set(command.data.name, command)
-// }
+import fun from '@/modules/messageUtility/index'
+import watching from '@/modules/messageUtility/monitor/watching'
+import webhook from '@/modules/webhooks/index'
 
-// const sequelize = new sql('database', 'user', 'password', {
-//   host: 'localhost',
-//   dialect: 'sqlite',
-//   logging: false,
-//   storage: 'database.sqlite',
-// })
+const client = new Client({
+  partials: [Partials.Channel, Partials.Message, Partials.User],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.DirectMessages,
+  ],
+})
 
-// const servers = require('./modules/dbStructure/servers')(sequelize, sql.DataTypes)
-// const botzone = require('./modules/dbStructure/botChannel')(sequelize, sql.DataTypes)
-// const log = require('./modules/dbStructure/log')(sequelize, sql.DataTypes)
-// const birthdayDB = require('./modules/dbStructure/birthday')(sequelize, sql.DataTypes)
-// // const twitterDB = require('./modules/dbStructure/twitter')(sequelize, sql.DataTypes);
-// // const twitterNotifDB = require('./modules/dbStructure/twitterNotif')(sequelize, sql.DataTypes);
-// // const messageReaction = require('./modules/dbStructure/messageReaction')(sequelize, sql.DataTypes);
-// // const birthday = require('./modules/dbFunction/birthday');
-// const database = require('./modules/dbFunction/database')
-// // const twitterFunction = require('./modules/dbFunction/twitter');
-// // const twitterNotifFunction = require('./modules/dbFunction/twitterNotif');
+client.once('clientReady', async (client) => {
+  // #region : Commands
+  client.commands = CommandDict
+  // #endregion
 
-// const Obj = new database.ServerDB()
-// // const twitterObj = new twitterFunction.twitter();
-// // const twitterNotifObj = new twitterNotifFunction.twitterNotif();
+  // #region : Database
+  const sequelize = new Sequelize('database', 'user', 'password', {
+    host: 'localhost',
+    dialect: 'sqlite',
+    logging: false,
+    storage: 'database.sqlite',
+  })
 
-// client.once('clientReady', () => {
-//   const now = new Date()
-//   const time = now.toTimeString()
-//   console.log(c.magenta`${time}`)
+  try {
+    await Promise.all([
+      BirthdayDB(sequelize).sync(),
+      BotChannelDB(sequelize).sync(),
+      BotLogDB(sequelize).sync(),
+      ServersDB(sequelize).sync(),
+    ])
+  } catch (error) {
+    console.error('Cannot connect to the database:', error)
+  }
+  // #endregion
 
-//   const discordjsVersion = require('discord.js').version
-//   console.log(`${c.green.bold`discord.js version:`} ${discordjsVersion}`)
+  // #region : Cron job
+  try {
+    const cronHelper = new CronJobHelper(client, miaomiCh)
+    taskScheduler.setup(client, cronHelper)
 
-//   servers.sync()
-//   botzone.sync()
-//   log.sync()
-//   birthdayDB.sync()
-//   // twitterDB.sync();
-//   // twitterNotifDB.sync();
-//   // messageReaction.sync();
+    console.log(c.yellow.bold`\nScheduled Tasks:`)
+    console.log(taskScheduler.jobList)
+  } catch (error) {
+    console.error('Error setting up cron jobs:', error)
+  }
+  // #endregion
 
-//   client.user.setActivity('蒼アオ', { type: ActivityType.Watching })
-//   console.log(`以 ${c.green.bold(client.user.displayName)} 登入`)
+  client.user.setActivity('蒼アオ', { type: ActivityType.Watching })
+  console.log(`\n--------------------------------------------`)
+  console.log(`以 ${c.green.bold(client.user.displayName)} 登入`)
+  console.log(`--------------------------------------------\n`)
+})
 
-//   setInterval(async () => {
-//     // serverstats db update
-//     let i
-//     const array = Obj.allServerId()
-//     for (i = 0; i < (await array).length; i++) {
-//       const serverName = client.guilds.cache.get((await array)[i]).name
-//       await Obj.updateServer((await array)[i], serverName)
-//     };
-//   }, 24 * 60 * 60 * 1000)
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isCommand()) return
 
-//   // #region : Cron Job
-//   const cronJobHelper = require('./modules/cronjob/helper')
-//   const taskScheduler = require('./modules/cronjob/task-scheduler')
-//   require('./modules/cronjob/jobs/index')
+  const command = client.commands.get(interaction.commandName)
+  if (!command) return
 
-//   console.log(c.yellow.bold`\nScheduled Tasks:`)
-//   console.log(taskScheduler.jobList)
+  try {
+    await command.execute(interaction as ChatInputCommandInteraction, client)
+  } catch (error) {
+    console.error(error)
+    await interaction.reply({ content: `執行指令時出現問題，請洽伺服器管理員或<@${oid}>`, flags: MessageFlags.Ephemeral })
+  }
+})
 
-//   const cronHelper = new cronJobHelper(client, miaomiCh)
-//   if (taskScheduler.taskList.get('minute').size) {
-//     cronHelper.setRepeatAction(cronJobHelper.MINUTE, () => {
-//       taskScheduler.taskList.get('minute').forEach(t => t.task(client))
-//     })
-//   }
-//   if (taskScheduler.taskList.get('hour').size) {
-//     cronHelper.setRepeatAction(cronJobHelper.HOUR, () => {
-//       taskScheduler.taskList.get('hour').forEach(t => t.task(client))
-//     })
-//   }
-//   if (taskScheduler.taskList.get('daily').size) {
-//     cronHelper.setRepeatAction(cronJobHelper.DAILY, () => {
-//       taskScheduler.taskList.get('daily').forEach(t => t.task(client))
-//     })
-//   }
-//   if (taskScheduler.taskList.get('month').size) {
-//     cronHelper.setRepeatAction(cronJobHelper.MONTH, () => {
-//       taskScheduler.taskList.get('month').forEach(t => t.task(client))
-//     })
-//   }
-//   if (taskScheduler.taskList.get('other').size) {
-//     taskScheduler.taskList.get('other').forEach((t) => {
-//       if (t.period) {
-//         cronHelper.setRepeatAction(t.period, () => t.task(client))
-//       }
-//     })
-//   }
-//   // #endregion
-// })
+client.on('messageDelete', async (msg) => {
+  if (!msg.author || msg.author.bot) return
+  MsgDeleted.execute(msg, client)
+})
 
-// client.on('interactionCreate', async (interaction) => {
-//   if (!interaction.isCommand()) {
-//     return
-//   }
-//   const command = client.commands.get(interaction.commandName)
-//   if (!command) {
-//     return
-//   }
-//   try {
-//     await command.execute(interaction, client)
-//   } catch (error) {
-//     console.error(error)
-//     await interaction.reply({ content: `執行指令時出現問題，請洽伺服器管理員或<@${oid}>`, flags: MessageFlags.Ephemeral })
-//   }
-// })
+client.on('messageUpdate', async (oldMessage, newMessage) => {
+  if (oldMessage.content === newMessage.content) return
+  MsgUpdated.execute(oldMessage, newMessage, client)
+})
 
-// client.on('messageDelete', async (msg) => {
-//   if (msg.author.bot) {
-//     return
-//   }
-//   const del = require('./modules/logEvents/messageDeleted')
-//   del.execute(msg, client)
-// })
+client.on('messageCreate', async (msg) => {
+  if (msg.author.bot) return
+  await Promise.allSettled([
+    webhook.execute(msg), // webhook
+    watching.execute(msg, client), // 監控
+    fun.execute(msg), // fun
+  ])
+})
 
-// client.on('messageUpdate', async (oldMessage, newMessage) => {
-//   if (oldMessage.content === newMessage.content) {
-//     return
-//   }
-//   const up = require('./modules/logEvents/messageUpdate')
-//   up.execute(oldMessage, newMessage, client)
-// })
-
-// client.on('messageCreate', async (msg) => {
-//   if (msg.author.bot) {
-//     return
-//   }
-
-//   // webhook
-//   const webhook = require('./modules/webhook')
-//   await webhook.execute(msg)
-
-//   // 監控
-//   const watching = require('./modules/messageUtility/watching')
-//   await watching.execute(msg, client)
-
-//   // fun
-//   const fun = require('./modules/messageUtility/fun')
-//   await fun.execute(msg)
-// })
-
-// client.login(token)
+client.login(token)

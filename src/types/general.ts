@@ -15,4 +15,6 @@ export type typeMonthNames = (typeof monthNames)[number]
 export const monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const
 export type typeMonthNamesShort = (typeof monthNamesShort)[number]
 
-export type ChannelMessageObj = ClientEvents['messageCreate'][number]
+export type MsgCreate = ClientEvents['messageCreate'][0]
+export type MsgDelete = ClientEvents['messageDelete'][0]
+export type MsgUpdate = ClientEvents['messageUpdate']

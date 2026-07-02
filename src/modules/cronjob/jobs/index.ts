@@ -1,0 +1,2 @@
+import './checkBirthday'
+import './serverStatUpdate'

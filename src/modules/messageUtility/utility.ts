@@ -1,8 +1,8 @@
 import type { BaseMessageOptions } from 'discord.js'
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgCreate } from '@/types/general'
 import randomFn from 'random'
 
-export function omikuji(msg: ChannelMessageObj) {
+export function omikuji(msg: MsgCreate) {
   interface OmikujiResult {
     color: number
     image: string
@@ -86,7 +86,7 @@ export function omikuji(msg: ChannelMessageObj) {
   }
 }
 
-export function flipCoin(author: ChannelMessageObj['author'], multiple = false) {
+export function flipCoin(author: MsgCreate['author'], multiple = false) {
   const output = []
   const count = multiple ? randomFn.int(3, 8) : 1
   let haveMiddle = false

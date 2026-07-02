@@ -1,10 +1,10 @@
 import type { Client } from 'discord.js'
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgCreate } from '@/types/general'
 import { ChannelType } from 'discord.js'
 import config from '@/config.json'
 
-module.exports = {
-  async execute(msg: ChannelMessageObj, client: Client) {
+export default {
+  async execute(msg: MsgCreate, client: Client) {
     if (msg.author.id === config.oid) return
 
     const owner = await client.users.fetch(config.oid)

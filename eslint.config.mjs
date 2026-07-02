@@ -5,6 +5,7 @@ export default antfu(...oli({
   typescript: {
     overrides: {
       'ts/ban-ts-comment': 'off',
+      'ts/no-unsafe-function-type': 'off',
     },
   },
 }))

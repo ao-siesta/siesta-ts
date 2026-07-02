@@ -1,8 +1,8 @@
-import type { ChannelMessageObj } from '@/types/general'
+import type { MsgCreate } from '@/types/general'
 import { WebhookClient } from 'discord.js'
 import webhooks from './webhooks.config'
 
-function hookMikenekoNormal(msg: ChannelMessageObj) {
+function hookMikenekoNormal(msg: MsgCreate) {
   const webhook = new WebhookClient({ url: webhooks.mikeneko.normal })
   webhook.send({
     content: /^[補—–\-]/.test(msg.content) ? `${msg.content}` : ` : ${msg.content}`,
@@ -11,7 +11,7 @@ function hookMikenekoNormal(msg: ChannelMessageObj) {
   })
 }
 
-function hookMikenekoTc(msg: ChannelMessageObj) {
+function hookMikenekoTc(msg: MsgCreate) {
   const webhook = new WebhookClient({ url: webhooks.mikeneko.tcMember })
   webhook.send({
     content: /^[補—–\-]/.test(msg.content) ? `${msg.content}` : ` : ${msg.content}`,
@@ -20,7 +20,7 @@ function hookMikenekoTc(msg: ChannelMessageObj) {
   })
 }
 
-function hookMikenekoYt(msg: ChannelMessageObj) {
+function hookMikenekoYt(msg: MsgCreate) {
   const webhook = new WebhookClient({ url: webhooks.mikeneko.ytMember })
   webhook.send({
     content: /^[補—–\-]/.test(msg.content) ? `${msg.content}` : ` : ${msg.content}`,
@@ -29,7 +29,7 @@ function hookMikenekoYt(msg: ChannelMessageObj) {
   })
 }
 
-function hookMikenekoReport(msg: ChannelMessageObj) {
+function hookMikenekoReport(msg: MsgCreate) {
   msg.author.send('已收到你的檢舉，管理員會盡速處理').catch(error => console.log(error))
 
   const webhook = new WebhookClient({ url: webhooks.mikeneko.report })
@@ -51,7 +51,7 @@ function hookMikenekoReport(msg: ChannelMessageObj) {
   }
 }
 
-function hookAmemiya(msg: ChannelMessageObj) {
+function hookAmemiya(msg: MsgCreate) {
   const webhook = new WebhookClient({ url: webhooks.mikeneko.amemiya })
   webhook.send({
     content: /^[補—–\-]/.test(msg.content) ? `${msg.content}` : ` : ${msg.content}`,
@@ -60,7 +60,7 @@ function hookAmemiya(msg: ChannelMessageObj) {
   })
 }
 
-function hookYoruNormal(msg: ChannelMessageObj) {
+function hookYoruNormal(msg: MsgCreate) {
   const webhook = new WebhookClient({ url: webhooks.yoru.normal })
   webhook.send({
     content: /^[補—–\-]/.test(msg.content) ? `${msg.content}` : ` : ${msg.content}`,
@@ -69,7 +69,7 @@ function hookYoruNormal(msg: ChannelMessageObj) {
   })
 }
 
-function hookYoruReport(msg: ChannelMessageObj) {
+function hookYoruReport(msg: MsgCreate) {
   msg.author.send('已收到你的檢舉，管理員會盡速處理').catch(error => console.log(error))
 
   const webhook = new WebhookClient({ url: webhooks.yoru.report })
@@ -90,7 +90,7 @@ function hookYoruReport(msg: ChannelMessageObj) {
   }
 }
 
-const actions = new Map<string, (msg: ChannelMessageObj) => void>([
+const actions = new Map<string, (msg: MsgCreate) => void>([
   [webhooks.mikeneko.normalChannel, hookMikenekoNormal],
   [webhooks.mikeneko.tcChannel, hookMikenekoTc],
   [webhooks.mikeneko.ytChannel, hookMikenekoYt],
@@ -101,7 +101,7 @@ const actions = new Map<string, (msg: ChannelMessageObj) => void>([
 ])
 
 export default {
-  execute: async (msg: ChannelMessageObj) => {
+  execute: async (msg: MsgCreate) => {
     actions.get(msg.channelId)?.(msg)
   },
 }

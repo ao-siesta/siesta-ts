@@ -10,11 +10,9 @@ const db = new Sequelize('database', 'user', 'password', {
 })
 
 export default class ServerDB {
-  guildId: string
   server: ReturnType<typeof servers>
 
-  constructor(guildId: string) {
-    this.guildId = guildId
+  constructor() {
     this.server = servers(db)
   }
 
@@ -26,7 +24,7 @@ export default class ServerDB {
     })
   }
 
-  async updateServer(guildId: string, guildName: string, adminrole: string) {
+  async updateServer(guildId: string, guildName: string, adminrole?: string) {
     await this.server.update({
       server_name: guildName,
       adminrole,
