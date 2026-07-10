@@ -37,8 +37,6 @@
     }
   },
   "scripts": {
-    "initialize": "git reset $(git commit-tree \"HEAD^{tree}\" -m \"Initialize\")",
-    "build": "tsdown --clean --dts",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
     "lint:inspect": "eslint --inspect-config",
@@ -72,8 +70,6 @@
     "npm-check-updates": "^22.2.7",
     "simple-git-hooks": "^2.13.1",
     "taze": "^19.14.1",
-    "tsdown": "^0.22.3",
-    "tsdown-stale-guard": "^0.1.2",
     "tsx": "^4.22.4",
     "typescript": "^5.9.3"
   },
