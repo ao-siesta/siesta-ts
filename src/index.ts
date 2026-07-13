@@ -3,7 +3,7 @@ import c from 'ansis'
 import { ActivityType, Client, GatewayIntentBits, MessageFlags, Partials } from 'discord.js'
 import { Sequelize } from 'sequelize'
 import { miaomiCh, oid, token } from '@/config.json'
-import { CommandDict } from './modules/commands'
+import { CommandDict, printCommandList } from './modules/commands'
 
 import CronJobHelper from './modules/cronjob/helper'
 import taskScheduler from './modules/cronjob/task-scheduler'
@@ -37,6 +37,7 @@ const client = new Client({
 client.once('clientReady', async (client) => {
   // #region : Commands
   client.commands = CommandDict
+  printCommandList()
   // #endregion
 
   // #region : Database

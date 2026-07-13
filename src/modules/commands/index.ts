@@ -49,6 +49,6 @@ export const CommandDict = new Collection<string, Command>([
 export const CommandDictJSON = () => CommandDict.map(cmd => cmd.data.toJSON())
 
 export function printCommandList() {
-  console.log(c.cyan`List of commands:`)
-  CommandDictJSON().forEach(cmd => console.log(`${c.cyan`-`} ${c.yellow(cmd.name)}: ${cmd.description}`))
+  console.log(c.yellow.bold`List of commands:`)
+  CommandDictJSON().forEach(cmd => console.log(`${c.cyan`- ${cmd.name}`}: ${cmd.description}`))
 }
