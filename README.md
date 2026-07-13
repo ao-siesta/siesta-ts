@@ -6,7 +6,7 @@ A bot for moderating and monitoring discord guilds. Recently been rewritten in T
 ## Setup
 
 ### Prerequisites
-Required NodeJS v24.17.0
+Required NodeJS v24.18.0
 
 ### Prepare config file
 
