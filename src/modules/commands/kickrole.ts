@@ -1,11 +1,17 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isAdmin, logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'kickrole',
+  description: '踢出身分組中的成員',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('kickrole')
-    .setDescription('踢出身分組中的成員')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addStringOption(option =>
       option.setName('kick-or-ban')
         .setDescription('kick or ban')
@@ -46,4 +52,4 @@ export default {
     logTime()
     console.log(`${interaction.user.displayName} 踢出了 ${targetrole.name} (${interaction.guild.name})\n-----------------------`)
   },
-}
+} satisfies Command

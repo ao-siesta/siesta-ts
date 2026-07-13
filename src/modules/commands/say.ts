@@ -1,11 +1,17 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isOwner, quoteString } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'say',
+  description: '洗版指令(擁有者限定)',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('say')
-    .setDescription('洗版指令(擁有者限定)')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addStringOption(option => option.setName('message').setDescription('message').setRequired(true))
     .addIntegerOption(option => option.setName('times').setDescription('times').setRequired(false)),
 
@@ -29,4 +35,4 @@ export default {
       }
     }
   },
-}
+} satisfies Command

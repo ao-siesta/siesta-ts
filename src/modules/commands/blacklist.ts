@@ -1,12 +1,17 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
-import type { Command } from '@/types/discord'
+import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { isOwner, logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'blacklist',
+  description: '將使用者從此機器人所有伺服器停權（擁有者限定）',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('blacklist')
-    .setDescription('將使用者從此機器人所有伺服器停權(擁有者限定)')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addStringOption(option =>
       option.setName('userid')
         .setDescription('使用者ID')

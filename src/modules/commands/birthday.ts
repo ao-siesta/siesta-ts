@@ -1,10 +1,16 @@
 import type { ChatInputCommandInteraction, GuildMember, InteractionReplyOptions, SlashCommandSubcommandBuilder } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import path from 'node:path'
 import Canvas from '@napi-rs/canvas'
 import { AttachmentBuilder, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { miaomi } from '@/config.json'
 import Birthday from '@/data/database/dbFunction/Birthday'
 import { dirname, isOwner } from '@/utils/general'
+
+const commandInfo: CommandInfo = {
+  name: 'birthday',
+  description: '今天是我生日',
+}
 
 // #region : Sub commands
 function todayWhoBirthday(sub: SlashCommandSubcommandBuilder) {
@@ -83,7 +89,7 @@ const subCommands: ((sub: SlashCommandSubcommandBuilder) => SlashCommandSubcomma
 // #endregion
 
 // #region : Build Command
-const command = new SlashCommandBuilder().setName('birthday').setDescription('今天是我生日')
+const command = new SlashCommandBuilder().setName(commandInfo.name).setDescription(commandInfo.description)
 subCommands.forEach(subCmd => command.addSubcommand(subCmd))
 // #endregion
 
@@ -242,4 +248,4 @@ export default {
       await interaction.reply(reply)
     }
   },
-}
+} satisfies Command

@@ -45,6 +45,7 @@ export const CommandDict = new Collection<string, Command>([
   [user.data.name, user],
   [version.data.name, version],
 ])
+export const CommandRegistry = new Collection<string, Command>()
 
 export const CommandDictJSON = () => CommandDict.map(cmd => cmd.data.toJSON())
 

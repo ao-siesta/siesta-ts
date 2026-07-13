@@ -1,13 +1,18 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
-import type { Command } from '@/types/discord'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import characters from '@/assets/avatars/characters'
 import { isOwner } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'characters',
+  description: '切換人設(擁有者限定)',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('characters')
-    .setDescription('切換人設(擁有者限定)')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addSubcommand(sub =>
       sub.setName('list')
         .setDescription('列出可用人設'))

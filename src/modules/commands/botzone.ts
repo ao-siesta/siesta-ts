@@ -1,12 +1,18 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isAdmin, logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'botzone',
+  description: '設定機器人區域',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('botzone')
-    .setDescription('設定機器人區域')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addStringOption(option =>
       option.setName('move')
         .setDescription('選擇動作')
@@ -48,4 +54,4 @@ export default {
       await interaction.reply({ content: '執行此指令時出現問題', flags: MessageFlags.Ephemeral })
     }
   },
-}
+} satisfies Command

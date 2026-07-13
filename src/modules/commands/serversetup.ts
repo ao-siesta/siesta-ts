@@ -1,12 +1,18 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import Servers from '@/data/database/dbFunction/Servers'
 import { isAdmin } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'serversetup',
+  description: '伺服器資訊設定',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('serversetup')
-    .setDescription('伺服器資訊設定')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addSubcommand(sub =>
       sub.setName('setup')
         .setDescription('設定伺服器資訊')
@@ -25,8 +31,8 @@ export default {
       return
     }
 
-    const guildId = interaction.guild.id
-    const servers = new Servers(guildId)
+    // const guildId = interaction.guild.id
+    const servers = new Servers()
     const s = await servers.listServer()
     console.log('s', s)
 
@@ -62,4 +68,4 @@ export default {
     //   }
     // }
   },
-}
+} satisfies Command

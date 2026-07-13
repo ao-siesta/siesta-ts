@@ -1,10 +1,16 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
+
+const commandInfo: CommandInfo = {
+  name: 'serverstats',
+  description: '伺服器基本資訊',
+}
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('serverstats')
-    .setDescription('伺服器基本資訊'),
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description),
 
   execute: async (interaction: ChatInputCommandInteraction) => {
     if (!interaction.guild) return
@@ -21,4 +27,4 @@ export default {
       footer: { text: `伺服器ID : ${interaction.guild.id}` },
     }] })
   },
-}
+} satisfies Command

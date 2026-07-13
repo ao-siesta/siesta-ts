@@ -1,11 +1,17 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { ChannelType, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isOwner } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'invite',
+  description: '產生邀請連結(擁有者限定)',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('invite')
-    .setDescription('產生邀請連結(擁有者限定)')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addSubcommand(sub =>
       sub.setName('bot')
         .setDescription('機器人邀請連結'))
@@ -46,4 +52,4 @@ export default {
         })
     }
   },
-}
+} satisfies Command

@@ -1,11 +1,17 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isAdmin, logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'clearrole',
+  description: '清除身分組中的成員',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('clearrole')
-    .setDescription('清除身分組中的成員')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addRoleOption(option =>
       option.setName('role')
         .setDescription('目標身分組')
@@ -34,4 +40,4 @@ export default {
     logTime()
     console.log(`-----------------------\n${interaction.user.displayName} 清除了 ${targetrole.name} 中的成員 (${interaction.guild.name})\n-----------------------`)
   },
-}
+} satisfies Command

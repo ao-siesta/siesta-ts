@@ -1,12 +1,18 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { version } from 'package.json'
 import { oid } from '@/config.json'
 
+const commandInfo: CommandInfo = {
+  name: 'stats',
+  description: '確認機器人的狀態',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('stats')
-    .setDescription('確認機器人的狀態'),
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description),
 
   execute: async (interaction: ChatInputCommandInteraction) => {
     await interaction.reply({ embeds: [{
@@ -21,4 +27,4 @@ export default {
       ],
     }] })
   },
-}
+} satisfies Command

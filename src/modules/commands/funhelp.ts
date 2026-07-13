@@ -1,7 +1,13 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isOwner } from '@/utils/general'
+
+const commandInfo: CommandInfo = {
+  name: 'funhelp',
+  description: '顯示趣味功能的說明書',
+}
 
 const botChannel = new BotChannel()
 
@@ -134,8 +140,8 @@ function generateHelpMsg() {
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('funhelp')
-    .setDescription('顯示趣味功能的說明書')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages),
 
   execute: async (interaction: ChatInputCommandInteraction) => {
@@ -146,4 +152,4 @@ export default {
       await interaction.reply({ content: '請在機器人區域中使用', ephemeral: true })
     }
   },
-}
+} satisfies Command

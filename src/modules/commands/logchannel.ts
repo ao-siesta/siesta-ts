@@ -1,12 +1,18 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
+import type { CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotLog from '@/data/database/dbFunction/BotLog'
 import { isAdmin, logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'logchannel',
+  description: '在此頻道紀錄訊息編輯與刪除',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('logchannel')
-    .setDescription('在此頻道紀錄訊息編輯與刪除')
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description)
     .addSubcommand(sub =>
       sub.setName('add')
         .setDescription('新增記錄頻道'),

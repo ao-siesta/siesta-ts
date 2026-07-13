@@ -1,13 +1,19 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
+import type { Command, CommandInfo } from '@/types/discord'
 import { ChannelType, MessageFlags, SlashCommandBuilder, ThreadAutoArchiveDuration } from 'discord.js'
 import { consoleChannel } from '@/config.json'
 import Servers from '@/data/database/dbFunction/Servers'
 import { logTime } from '@/utils/general'
 
+const commandInfo: CommandInfo = {
+  name: 'report',
+  description: '開啟檢舉用私人討論串',
+}
+
 export default {
   data: new SlashCommandBuilder()
-    .setName('report')
-    .setDescription('開啟檢舉用私人討論串'),
+    .setName(commandInfo.name)
+    .setDescription(commandInfo.description),
 
   execute: async (interaction: ChatInputCommandInteraction, client: Client) => {
     if (!interaction.guild || !interaction.channel || !interaction.member) return
@@ -17,7 +23,7 @@ export default {
     const logChannel = client.channels.cache.get(consoleChannel)
     if (!logChannel?.isSendable()) return
 
-    const servers = new Servers(interaction.guild.id)
+    const servers = new Servers()
     if (!await servers.findServer(interaction.guild.id)) {
       interaction.reply({ content: '請通知管理員先執行`/serversetup`指令', flags: MessageFlags.Ephemeral })
       return
@@ -43,4 +49,4 @@ export default {
     await thread.send(`<@${interaction.member.user.id}>您好\n這個討論串只有您與<@&${admin}>看的見\n請將您要投訴的內容、訊息連結、截圖都貼在這個地方，會由管理員進行處置。\n**請務必注意若在此標註任何人，他將會被邀請進入此討論串。**`)
     await interaction.reply({ content: `投訴專用討論串<#${thread.id}>已建立，請放心的在該討論串進行投訴`, flags: MessageFlags.Ephemeral })
   },
-}
+} satisfies Command
