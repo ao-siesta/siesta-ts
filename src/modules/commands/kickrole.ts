@@ -2,13 +2,14 @@ import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isAdmin, logTime } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'kickrole',
   description: '踢出身分組中的成員',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -52,4 +53,4 @@ export default {
     logTime()
     console.log(`${interaction.user.displayName} 踢出了 ${targetrole.name} (${interaction.guild.name})\n-----------------------`)
   },
-} satisfies Command
+} satisfies Command)

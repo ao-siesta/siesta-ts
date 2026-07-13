@@ -3,13 +3,14 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { version } from 'package.json'
 import { oid } from '@/config.json'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'stats',
   description: '確認機器人的狀態',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),
@@ -27,4 +28,4 @@ export default {
       ],
     }] })
   },
-} satisfies Command
+} satisfies Command)

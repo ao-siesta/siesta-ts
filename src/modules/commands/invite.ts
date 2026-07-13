@@ -2,13 +2,14 @@ import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { ChannelType, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isOwner } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'invite',
   description: '產生邀請連結(擁有者限定)',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -52,4 +53,4 @@ export default {
         })
     }
   },
-} satisfies Command
+} satisfies Command)

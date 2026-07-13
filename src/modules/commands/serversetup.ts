@@ -3,13 +3,14 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import Servers from '@/data/database/dbFunction/Servers'
 import { isAdmin } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'serversetup',
   description: '伺服器資訊設定',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -68,4 +69,4 @@ export default {
     //   }
     // }
   },
-} satisfies Command
+} satisfies Command)

@@ -3,6 +3,7 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isOwner } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'funhelp',
@@ -138,7 +139,7 @@ function generateHelpMsg() {
   }
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -152,4 +153,4 @@ export default {
       await interaction.reply({ content: '請在機器人區域中使用', ephemeral: true })
     }
   },
-} satisfies Command
+} satisfies Command)

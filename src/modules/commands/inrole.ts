@@ -1,13 +1,14 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'inrole',
   description: '查看身分組中的成員',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -35,4 +36,4 @@ export default {
       })
     }
   },
-} satisfies Command
+} satisfies Command)

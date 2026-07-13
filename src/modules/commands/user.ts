@@ -1,13 +1,14 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'user',
   description: '個人資訊',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -33,4 +34,4 @@ export default {
       }],
     })
   },
-} satisfies Command
+} satisfies Command)

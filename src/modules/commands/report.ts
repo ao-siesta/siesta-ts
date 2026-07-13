@@ -4,13 +4,14 @@ import { ChannelType, MessageFlags, SlashCommandBuilder, ThreadAutoArchiveDurati
 import { consoleChannel } from '@/config.json'
 import Servers from '@/data/database/dbFunction/Servers'
 import { logTime } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'report',
   description: '開啟檢舉用私人討論串',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),
@@ -49,4 +50,4 @@ export default {
     await thread.send(`<@${interaction.member.user.id}>您好\n這個討論串只有您與<@&${admin}>看的見\n請將您要投訴的內容、訊息連結、截圖都貼在這個地方，會由管理員進行處置。\n**請務必注意若在此標註任何人，他將會被邀請進入此討論串。**`)
     await interaction.reply({ content: `投訴專用討論串<#${thread.id}>已建立，請放心的在該討論串進行投訴`, flags: MessageFlags.Ephemeral })
   },
-} satisfies Command
+} satisfies Command)

@@ -2,13 +2,14 @@ import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isOwner, quoteString } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'listservers',
   description: '列出機器人所在伺服器(擁有者限定)',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),
@@ -28,4 +29,4 @@ export default {
       description: output,
     }] })
   },
-} satisfies Command
+} satisfies Command)

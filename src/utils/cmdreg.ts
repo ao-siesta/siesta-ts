@@ -1,7 +1,8 @@
 import c from 'ansis'
 import { REST, Routes } from 'discord.js'
 import { cid, token } from '@/config.json'
-import { CommandDictJSON, printCommandList } from '@/modules/commands'
+import { CommandDictJSON, printCommandList } from '@/modules/commands/registry'
+import '@/modules/commands/index'
 
 const rest = new REST().setToken(token)
 rest.put(Routes.applicationCommands(cid), { body: CommandDictJSON() })

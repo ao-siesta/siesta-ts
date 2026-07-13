@@ -2,13 +2,14 @@ import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { isOwner, logTime } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'blacklist',
   description: '將使用者從此機器人所有伺服器停權（擁有者限定）',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -41,4 +42,4 @@ export default {
     logTime()
     console.log(`-----------------------\nblacklisted ${userId}\n-----------------------`)
   },
-} satisfies Command
+} satisfies Command)

@@ -6,6 +6,7 @@ import { AttachmentBuilder, MessageFlags, SlashCommandBuilder } from 'discord.js
 import { miaomi } from '@/config.json'
 import Birthday from '@/data/database/dbFunction/Birthday'
 import { dirname, isOwner } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'birthday',
@@ -231,7 +232,7 @@ const actionDict = new Map([
 ]) satisfies Map<string, (bdObj: Birthday, options: ChatInputCommandInteraction['options'], member: GuildMember) => Promise<InteractionReplyOptions | string>>
 // #endregion
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: command,
   execute: async (interaction: ChatInputCommandInteraction) => {
     if (!isOwner(interaction.user.id) && interaction.guild?.id !== miaomi) {
@@ -248,4 +249,4 @@ export default {
       await interaction.reply(reply)
     }
   },
-} satisfies Command
+} satisfies Command)

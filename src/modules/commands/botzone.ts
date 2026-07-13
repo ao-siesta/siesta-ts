@@ -3,13 +3,14 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isAdmin, logTime } from '@/utils/general'
+import { CommandRegistry } from './registry'
 
 const commandInfo: CommandInfo = {
   name: 'botzone',
   description: '設定機器人區域',
 }
 
-export default {
+CommandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)
@@ -54,4 +55,4 @@ export default {
       await interaction.reply({ content: '執行此指令時出現問題', flags: MessageFlags.Ephemeral })
     }
   },
-} satisfies Command
+} satisfies Command)
