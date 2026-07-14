@@ -1,7 +1,7 @@
 {
-  "name": "ao-siesta",
+  "name": "siesta-ts",
   "type": "module",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "",
   "author": "William Wong",
   "license": "MIT",
