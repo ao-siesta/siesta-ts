@@ -44,7 +44,6 @@
     "run": "nr start",
     "dev": "tsx watch src/index.ts",
     "prepare": "simple-git-hooks",
-    "prepack": "nr build",
     "release": "nlx bumpp",
     "analyze": "nlx node-modules-inspector",
     "cmdreg": "tsx src/utils/cmdreg.ts"
@@ -71,7 +70,7 @@
     "simple-git-hooks": "^2.13.1",
     "taze": "^19.14.1",
     "tsx": "^4.22.4",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
