@@ -9,6 +9,7 @@ export const good = [
   '一芳水果茶',
   '乾馬丁尼',
   '五十嵐',
+  '余市high ball',
   '保力達',
   '全家',
   '冰酒',
@@ -116,7 +117,6 @@ export const good = [
   '黑啤',
   '黑松沙士',
   '龍蝦湯',
-  '余市high ball',
 ]
 
 export const strange = [
