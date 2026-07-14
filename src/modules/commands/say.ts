@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
+import ErrorMessage from '@/utils/ErrorMessage'
 import { isOwner, quoteString } from '@/utils/general'
 import { CommandRegistry } from './registry'
 
@@ -19,7 +20,7 @@ CommandRegistry.set(commandInfo.name, {
   execute: async (interaction: ChatInputCommandInteraction) => {
     if (!interaction.channel?.isSendable()) return
     if (isOwner(interaction.user.id)) {
-      await interaction.reply({ content: '此指令僅限擁有者使用', flags: MessageFlags.Ephemeral })
+      await interaction.reply({ content: ErrorMessage.OwnerOnly, flags: MessageFlags.Ephemeral })
       return
     }
 

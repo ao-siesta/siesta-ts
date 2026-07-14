@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
+import ErrorMessage from '@/utils/ErrorMessage'
 import { isOwner, logTime } from '@/utils/general'
 import { CommandRegistry } from './registry'
 
@@ -24,7 +25,7 @@ CommandRegistry.set(commandInfo.name, {
 
   execute: async (interaction: ChatInputCommandInteraction, client: Client) => {
     if (!isOwner(interaction.user.id)) {
-      await interaction.reply({ content: '此指令僅限擁有者使用', ephemeral: true })
+      await interaction.reply({ content: ErrorMessage.OwnerOnly, ephemeral: true })
       return
     }
     const channel = interaction.channel

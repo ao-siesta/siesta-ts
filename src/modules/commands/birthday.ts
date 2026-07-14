@@ -5,6 +5,7 @@ import Canvas from '@napi-rs/canvas'
 import { AttachmentBuilder, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { miaomi } from '@/config.json'
 import Birthday from '@/data/database/dbFunction/Birthday'
+import ErrorMessage from '@/utils/ErrorMessage'
 import { dirname, isOwner } from '@/utils/general'
 import { CommandRegistry } from './registry'
 
@@ -236,7 +237,7 @@ CommandRegistry.set(commandInfo.name, {
   data: command,
   execute: async (interaction: ChatInputCommandInteraction) => {
     if (!isOwner(interaction.user.id) && interaction.guild?.id !== miaomi) {
-      await interaction.reply({ content: '此指令僅限擁有者及部分伺服器使用', flags: MessageFlags.Ephemeral })
+      await interaction.reply({ content: ErrorMessage.OwnerAndServersOnly, flags: MessageFlags.Ephemeral })
       return
     }
     if (!interaction.inGuild()) return
