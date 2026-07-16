@@ -14,7 +14,11 @@ CommandRegistry.set(commandInfo.name, {
     .setDescription(commandInfo.description),
 
   execute: async (interaction: ChatInputCommandInteraction, client: Client) => {
-    const sent = await interaction.reply({ content: 'Pinging...' })
-    interaction.editReply(`Roundtrip latency: ${sent.createdTimestamp - interaction.createdTimestamp}ms\nWebsocket heartbeat: ${client.ws.ping}ms.`)
+    const sent = await interaction.reply({ content: 'Pinging...', withResponse: true })
+    try {
+      await interaction.editReply(`Roundtrip latency: ${sent.resource!.message!.createdTimestamp - interaction.createdTimestamp}ms\nWebsocket heartbeat: ${client.ws.ping}ms.`)
+    } catch {
+      await interaction.editReply(`Roundtrip latency: Calculating..Please try again later.\nWebsocket heartbeat: ${client.ws.ping}ms.`)
+    }
   },
 } satisfies Command)
