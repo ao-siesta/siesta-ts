@@ -1,6 +1,6 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
-import { PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import { MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isOwner } from '@/utils/general'
 import { CommandRegistry } from './registry'
@@ -150,7 +150,7 @@ CommandRegistry.set(commandInfo.name, {
     if (isRightChannel || isOwner(interaction.user.id)) {
       await interaction.reply({ content: '**趣味功能**', embeds: [generateHelpMsg()] })
     } else {
-      await interaction.reply({ content: '請在機器人區域中使用', ephemeral: true })
+      await interaction.reply({ content: '請在機器人區域中使用', flags: MessageFlags.Ephemeral })
     }
   },
 } satisfies Command)
