@@ -2,6 +2,9 @@ import type { ChatInputCommandInteraction } from 'discord.js'
 import { PermissionFlagsBits } from 'discord.js'
 import config from '@/config.json'
 
+import { dirname as dn } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 export function quoteString(str?: string) {
   return `\`${str}\``
 }
@@ -18,3 +21,6 @@ export function logTime() {
   const now = new Date()
   console.log(now.toTimeString())
 }
+
+// NOTE: 要換成function
+export const dirname = dn(fileURLToPath(import.meta.url))
