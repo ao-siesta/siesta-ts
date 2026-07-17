@@ -2,14 +2,14 @@ import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
 import { quoteString } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'listbot',
   description: '列出伺服器中的機器人',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),

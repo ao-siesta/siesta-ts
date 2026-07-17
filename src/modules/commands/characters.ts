@@ -4,14 +4,14 @@ import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import characters from '@/assets/avatars/characters'
 import ErrorMessage from '@/utils/ErrorMessage'
 import { isOwner } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'characters',
   description: '切換人設(擁有者限定)',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)

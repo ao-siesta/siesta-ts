@@ -3,14 +3,14 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import ErrorMessage from '@/utils/ErrorMessage'
 import { isOwner, quoteString } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'say',
   description: '洗版指令(擁有者限定)',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)

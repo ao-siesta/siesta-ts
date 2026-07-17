@@ -3,14 +3,14 @@ import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotChannel from '@/data/database/dbFunction/BotChannel'
 import { isAdmin, logTime } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'botzone',
   description: '設定機器人區域',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)

@@ -1,14 +1,14 @@
 import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'version',
   description: '版本更新紀錄',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),

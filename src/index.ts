@@ -4,7 +4,7 @@ import { ActivityType, Client, GatewayIntentBits, MessageFlags, Partials } from 
 import { Sequelize } from 'sequelize'
 import { miaomiCh, oid, token } from '@/config.json'
 
-import { CommandRegistry, printCommandList } from '@/modules/commands/registry'
+import CommandRegistry from '@/modules/commands/CommandRegistry'
 import '@/modules/commands/index'
 
 import CronJobHelper from './modules/cronjob/helper'
@@ -39,7 +39,7 @@ const client = new Client({
 client.once('clientReady', async (client) => {
   // #region : Commands
   client.commands = CommandRegistry
-  printCommandList()
+  CommandRegistry.print()
   // #endregion
 
   // #region : Database

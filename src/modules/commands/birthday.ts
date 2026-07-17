@@ -7,7 +7,7 @@ import { miaomi } from '@/config.json'
 import Birthday from '@/data/database/dbFunction/Birthday'
 import ErrorMessage from '@/utils/ErrorMessage'
 import { dirname, isOwner } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'birthday',
@@ -233,7 +233,7 @@ const actionDict = new Map([
 ]) satisfies Map<string, (bdObj: Birthday, options: ChatInputCommandInteraction['options'], member: GuildMember) => Promise<InteractionReplyOptions | string>>
 // #endregion
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: command,
   execute: async (interaction: ChatInputCommandInteraction) => {
     if (!isOwner(interaction.user.id) && interaction.guild?.id !== miaomi) {

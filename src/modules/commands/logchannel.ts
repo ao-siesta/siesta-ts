@@ -3,14 +3,14 @@ import type { CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import BotLog from '@/data/database/dbFunction/BotLog'
 import { isAdmin, logTime } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'logchannel',
   description: '在此頻道紀錄訊息編輯與刪除',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)

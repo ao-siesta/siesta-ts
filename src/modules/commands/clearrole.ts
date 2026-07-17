@@ -2,14 +2,14 @@ import type { ChatInputCommandInteraction } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { isAdmin, logTime } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'clearrole',
   description: '清除身分組中的成員',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description)

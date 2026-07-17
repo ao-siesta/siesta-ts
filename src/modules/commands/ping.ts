@@ -1,14 +1,14 @@
 import type { ChatInputCommandInteraction, Client } from 'discord.js'
 import type { Command, CommandInfo } from '@/types/discord'
 import { SlashCommandBuilder } from 'discord.js'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'ping',
   description: '確認延遲',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),

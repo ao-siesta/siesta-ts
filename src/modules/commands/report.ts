@@ -4,14 +4,14 @@ import { ChannelType, MessageFlags, SlashCommandBuilder, ThreadAutoArchiveDurati
 import { consoleChannel } from '@/config.json'
 import Servers from '@/data/database/dbFunction/Servers'
 import { logTime } from '@/utils/general'
-import { CommandRegistry } from './registry'
+import commandRegistry from './CommandRegistry'
 
 const commandInfo: CommandInfo = {
   name: 'report',
   description: '開啟檢舉用私人討論串',
 }
 
-CommandRegistry.set(commandInfo.name, {
+commandRegistry.set(commandInfo.name, {
   data: new SlashCommandBuilder()
     .setName(commandInfo.name)
     .setDescription(commandInfo.description),
