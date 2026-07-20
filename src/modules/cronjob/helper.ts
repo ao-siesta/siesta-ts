@@ -53,7 +53,7 @@ export default class CronJobHelper {
    * @throws  If channelId is not provided and no default is set
    */
   setPlainMessage(period: string, message: string, channelId: string = this.channelId): void {
-    if (!channelId === undefined) throw new Error('Channel ID not provided')
+    if (!channelId) throw new Error('Channel ID not provided')
 
     schedule(period, async () => {
       const channel = this.client.channels.cache.get(channelId)
@@ -69,7 +69,7 @@ export default class CronJobHelper {
    * @throws If channelId is not provided and no default is set
    */
   setEmbedMessage(period: string, embed_message: BaseMessageOptions['embeds'], channelId: string = this.channelId): void {
-    if (!channelId === undefined) throw new Error('Channel ID not provided')
+    if (!channelId) throw new Error('Channel ID not provided')
 
     schedule(period, async () => {
       const channel = this.client.channels.cache.get(channelId)
@@ -87,7 +87,7 @@ export default class CronJobHelper {
    * @see https://discord.js.org/#/docs/discord.js/v13/typedef/MessageOptions for content structure
    */
   setFreeMessage(period: string, content: BaseMessageOptions, channelId: string = this.channelId): void {
-    if (!channelId === undefined) throw new Error('Channel ID not provided')
+    if (!channelId) throw new Error('Channel ID not provided')
 
     schedule(period, async () => {
       const channel = this.client.channels.cache.get(channelId)
